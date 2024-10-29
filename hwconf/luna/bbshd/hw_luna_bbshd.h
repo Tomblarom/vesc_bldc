@@ -65,22 +65,22 @@
 #define HW_ADC_NBR_CONV			6
 
 // ADC Indexes
-#define ADC_IND_SENS1			0
-#define ADC_IND_SENS2			1
-#define ADC_IND_SENS3			2
-#define ADC_IND_CURR1			3
-#define ADC_IND_CURR2			4
-#define ADC_IND_CURR3			5
-#define ADC_IND_VIN_SENS		11
-#define ADC_IND_VOUT_GATE_DRV	12
-#define ADC_IND_EXT				10
-#define ADC_IND_EXT2			6
-#define ADC_IND_EXT3			13
-#define ADC_IND_TEMP_MOS		15
-#define ADC_IND_TEMP_MOS_2		8
-#define ADC_IND_TEMP_MOS_3		16
-#define ADC_IND_TEMP_MOTOR		9
-#define ADC_IND_VREFINT			16
+#define ADC_IND_SENS1			0   // VOLT1
+#define ADC_IND_SENS2			1   // VOLT2
+#define ADC_IND_SENS3			2   // VOLT3
+#define ADC_IND_CURR1			3   // CURR1
+#define ADC_IND_CURR2			4   // CURR2
+#define ADC_IND_CURR3			5   // CURR3
+#define ADC_IND_VIN_SENS		11  // VIN_SENS
+#define ADC_IND_VOUT_GATE_DRV	12  // ??
+#define ADC_IND_EXT				10  // THROTTLE
+#define ADC_IND_EXT2			6   // ?? Powerbutton ??
+#define ADC_IND_EXT3			13  // GEARSENSOR
+#define ADC_IND_TEMP_MOS		15  // TEMP_FET
+#define ADC_IND_TEMP_MOS_2		8   // PCB_TEMP
+#define ADC_IND_TEMP_MOS_3		16  // ADC_IND_VREFINT (maybe for logging?)
+#define ADC_IND_TEMP_MOTOR		9   // TEMP_MOTOR
+#define ADC_IND_VREFINT			16  // ADC_IND_VREFINT
 
 // ADC macros and settings
 

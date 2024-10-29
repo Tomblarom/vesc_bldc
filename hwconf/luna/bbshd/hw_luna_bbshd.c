@@ -98,22 +98,22 @@ void hw_init_gpio(void) {
 	palSetPadMode(AUX_GPIO, AUX_PIN, PAL_MODE_OUTPUT_PUSHPULL |	PAL_STM32_OSPEED_HIGHEST);
 
 	// ADC Pins
-	palSetPadMode(GPIOA, 0, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOA, 1, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOA, 2, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOA, 3, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOA, 5, PAL_MODE_INPUT_ANALOG);
+	palSetPadMode(GPIOA, 0, PAL_MODE_INPUT_ANALOG);		// SENS1
+	palSetPadMode(GPIOA, 1, PAL_MODE_INPUT_ANALOG);		// SENS2
+	palSetPadMode(GPIOA, 2, PAL_MODE_INPUT_ANALOG);		// SENS3
+	palSetPadMode(GPIOA, 3, PAL_MODE_INPUT_ANALOG);		// PCB_TEMP
+	palSetPadMode(GPIOA, 5, PAL_MODE_INPUT_ANALOG);		// TEMP_FET
 
-	palSetPadMode(GPIOA, 6, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOB, 0, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOB, 1, PAL_MODE_INPUT_ANALOG);
+	palSetPadMode(GPIOA, 6, PAL_MODE_INPUT_ANALOG);		// UNUSED
+	palSetPadMode(GPIOB, 0, PAL_MODE_INPUT_ANALOG);		// ADC_IND_EXT2		?? ADC2
+	palSetPadMode(GPIOB, 1, PAL_MODE_INPUT_ANALOG);		// V_GATE_DRIVER	??
 
-	palSetPadMode(GPIOC, 0, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOC, 1, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOC, 2, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOC, 3, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOC, 4, PAL_MODE_INPUT_ANALOG);
-	palSetPadMode(GPIOC, 5, PAL_MODE_INPUT_ANALOG);
+	palSetPadMode(GPIOC, 0, PAL_MODE_INPUT_ANALOG);		// CURR1
+	palSetPadMode(GPIOC, 1, PAL_MODE_INPUT_ANALOG);		// CURR2
+	palSetPadMode(GPIOC, 2, PAL_MODE_INPUT_ANALOG);		// CURR3
+	palSetPadMode(GPIOC, 3, PAL_MODE_INPUT_ANALOG);		// VIN_SENS
+	palSetPadMode(GPIOC, 4, PAL_MODE_INPUT_ANALOG);		// TEMP_MOTOR
+	palSetPadMode(GPIOC, 5, PAL_MODE_INPUT_ANALOG);		// ADC_IND_EXT		?? ADC1
     
 	
 	terminal_register_command_callback(
@@ -148,40 +148,42 @@ void hw_init_gpio(void) {
 }
 
 void hw_setup_adc_channels(void) {
-	// ADC1 regular channels
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_0,  1, ADC_SampleTime_15Cycles);	// 0	SENS1
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 2, ADC_SampleTime_15Cycles);	// 3	CURR1
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_8,  3, ADC_SampleTime_15Cycles);	// 6	ADC_IND_EXT2
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 4, ADC_SampleTime_15Cycles); // 9	TEMP_MOTOR
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_9,  5, ADC_SampleTime_15Cycles);	// 12	V_GATE_DRIVER
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_5,  6, ADC_SampleTime_15Cycles);	// 15	TEMP_FET
+	uint8_t t_samp = t_samp;
 
-	// ADC2 regular channels
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_1,  1, ADC_SampleTime_15Cycles);	// 1	SENS2
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_11, 2, ADC_SampleTime_15Cycles);	// 4	CURR2
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_6,  3, ADC_SampleTime_15Cycles);	// 7	UNUSED
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_15, 4, ADC_SampleTime_15Cycles);	// 10	ADC_IND_EXT
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_7,  5, ADC_SampleTime_15Cycles);	// 13	ADC_IND_EXT3
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_Vrefint, 6, ADC_SampleTime_15Cycles);// 16	ADC_IND_VREFINT
+	// ADC1 regular channels									          IDX	NAME
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_0,  		1, t_samp);		// 0	SENS1
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 		2, t_samp);		// 3	CURR1
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_8,  		3, t_samp);		// 6	ADC_IND_EXT2
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 		4, t_samp);		// 9	TEMP_MOTOR
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_9,  		5, t_samp);		// 12	V_GATE_DRIVER
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_5,  		6, t_samp);		// 15	TEMP_FET
 
-	// ADC3 regular channels
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_2,  1, ADC_SampleTime_15Cycles);	// 2	SENS3
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 2, ADC_SampleTime_15Cycles);	// 5	CURR3
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_3,  3, ADC_SampleTime_15Cycles);	// 8	PCB_TEMP
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_13, 4, ADC_SampleTime_15Cycles);	// 11	VBUS
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_1,  5, ADC_SampleTime_15Cycles);	// 14	UNUSED
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_Vrefint, 6, ADC_SampleTime_15Cycles);// 18	UNUSED
+	// ADC2 regular channels	
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_1,  		1, t_samp);		// 1	SENS2
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_11, 		2, t_samp);		// 4	CURR2
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_6,  		3, t_samp);		// 7	UNUSED
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_15, 		4, t_samp);		// 10	ADC_IND_EXT		THROTTLE
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_7,       5, t_samp);		// 13	ADC_IND_EXT3	GEARSENSOR
+	ADC_RegularChannelConfig(ADC2, ADC_Channel_Vrefint, 6, t_samp);		// 16	ADC_IND_VREFINT
+
+	// ADC3 regular channels	
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_2,  		1, t_samp);		// 2	SENS3
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_12, 		2, t_samp);		// 5	CURR3
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_3,  		3, t_samp);		// 8	PCB_TEMP
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_13, 		4, t_samp);		// 11	VIN_SENS
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_1,  		5, t_samp);		// 14	UNUSED
+	ADC_RegularChannelConfig(ADC3, ADC_Channel_Vrefint, 6, t_samp);		// 18	UNUSED
 
 	// Injected channels
-	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 1, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 1, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 2, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 2, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 2, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 3, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 3, ADC_SampleTime_15Cycles);
-	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 3, ADC_SampleTime_15Cycles);
+	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 1, t_samp);
+	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 1, t_samp);
+	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 1, t_samp);
+	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 2, t_samp);
+	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 2, t_samp);
+	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 2, t_samp);
+	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 3, t_samp);
+	ADC_InjectedChannelConfig(ADC2, ADC_Channel_11, 3, t_samp);
+	ADC_InjectedChannelConfig(ADC3, ADC_Channel_12, 3, t_samp);
 }
 
 void hw_start_i2c(void) {
@@ -327,6 +329,7 @@ float hw_get_distance(void) {
 float hw_get_distance_abs(void) {
 	return trip_odometer;
 }
+
 /* Gear Shift sensor support
  * Read the gear sensor and use it to override the brake adc signal to reduce motor 
  * power during shifting to extend gearing life.
