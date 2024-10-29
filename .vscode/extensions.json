@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools",
+        "marus25.cortex-debug",
+        "ms-vscode.makefile-tools",
+        "mhutchie.git-graph",
+        "letmaik.git-tree-compare",
+        "davidanson.vscode-markdownlint",
+        "yzhang.markdown-all-in-one",
+        "mcu-debug.peripheral-viewer",
+        "mcu-debug.memory-view",
+        "mcu-debug.debug-tracker-vscode",
+        "ms-vscode.cmake-tools"
+    ]
+}

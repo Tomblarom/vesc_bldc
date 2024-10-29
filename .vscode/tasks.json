@@ -1,0 +1,64 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make fw_x1_v2b_uart",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "flash",
+            "type": "shell",
+            "command": "C:/Program Files/SEGGER/JLink/JLink.exe",
+            "args": [
+                "-device",
+                "STM32F405RG",
+                "-if",
+                "SWD",
+                "-speed",
+                "4000",
+                "-autoconnect",
+                "1",
+                "-CommanderScript",
+                ".vscode/flash.jlink"
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build+flash",
+            "type": "shell",
+            "command": "C:/Program Files/SEGGER/JLink/JLink.exe",
+            "args": [
+                "-device",
+                "STM32F405RG",
+                "-if",
+                "SWD",
+                "-speed",
+                "4000",
+                "-autoconnect",
+                "1",
+                "-CommanderScript",
+                ".vscode/flash.jlink"
+            ],
+            "dependsOn": [
+                "build"
+            ],
+            "group": {
+                "kind": "none",
+                "isDefault": true
+            }
+        }
+    ]
+}

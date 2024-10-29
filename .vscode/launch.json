@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    // Sample config: https://os.mbed.com/users/janjongboom/notebook/debugging-ublox_evk_odin_w2-with-openocd-and-visua/
+    "version": "0.3.0",
+    "configurations": [        
+        {
+            "name": "VESC Debug (Openocd)",
+            "request": "launch",
+            "type": "cortex-debug",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/x1_v2b_uart/x1_v2b_uart.elf",
+            "servertype": "openocd",
+            "device": "stm32f4x",
+            "svdFile": ".vscode/STM32F405.svd",
+            "configFiles": [
+                "interface/stlink.cfg",
+                "target/stm32f4x.cfg"
+            ],
+            "linux": {
+                "preLaunchTask": "build"
+            },
+            "windows": {
+                "armToolchainPath": "C:/Program Files/ARM/gcc-arm-none-eabi-10.3-2021.10/bin",
+                // "armToolchainPath": "${workspaceRoot}/tools/gcc-arm-none-eabi-7-2018-q2-update/bin",
+                "preLaunchTask": "build"
+            },
+            
+        },
+        {
+            "name": "VESC Debug (J-Link)",
+            "request": "launch",
+            "type": "cortex-debug",
+            // "runToEntryPoint": "main",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/x1_v2b_uart/x1_v2b_uart.elf",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "device": "STM32F405RG",
+            "svdFile": ".vscode/STM32F405.svd",
+            "interface": "swd",
+            "serverArgs": ["-speed", "4000"],
+            "linux": {
+                "preLaunchTask": "build"
+            },
+            "windows": {
+                "armToolchainPath": "C:/Program Files/ARM/gcc-arm-none-eabi-10.3-2021.10/bin",
+                // "armToolchainPath": "${workspaceRoot}/tools/gcc-arm-none-eabi-7-2018-q2-update/bin",
+                "preLaunchTask": "build"
+            },
+            
+        }
+    ]
+}

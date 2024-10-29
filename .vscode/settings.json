@@ -1,0 +1,35 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "${workspaceRoot}/build/x1_v2b_uart",
+            "binaryPath": "${workspaceRoot}\\build\\x1_v2b_uart\\x1_v2b_uart.elf",
+            "binaryArgs": []
+        }
+    ],
+    "files.associations": {
+        "hw.h": "c",
+        "ch.h": "c",
+        "stm32f4xx_conf.h": "c",
+        "misc.h": "c",
+        "stm32f4xx.h": "c",
+        "hal.h": "c",
+        "halconf.h": "c",
+        "mcuconf.h": "c",
+        "conf_general.h": "c",
+        "mcconf_default.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "mempools.h": "c",
+        "bafang_display_serial.h": "c",
+        "luna_display_serial.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "stdint.h": "c",
+        "app.h": "c",
+        "mc_interface.h": "c"
+    },
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "cortex-debug.variableUseNaturalFormat": false,
+    "workspaceKeybindings.flash.enabled": true,
+    "workspaceKeybindings.buildAndFlash.enabled": true
+}

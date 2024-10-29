@@ -1,0 +1,6 @@
+r
+h
+loadbin "build/x1_v2b_uart/x1_v2b_uart.bin", 0x08000000 /NoErase
+r
+g
+q

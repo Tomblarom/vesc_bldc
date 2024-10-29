@@ -1,0 +1,19 @@
+
+// These are example keyboard shortcuts. Place them in .../Code/User/keybindings.json
+// CTRL + SHIFT + B: build (default)
+// CTRL + SHIFT + V: flash only
+// CTRL + SHIFT + C: build first and flash
+[
+    {
+        "key": "ctrl+shift+v",
+        "command": "workbench.action.tasks.runTask",
+        "args": "flash",
+        "when": "config.workspaceKeybindings.flash.enabled"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "workbench.action.tasks.runTask",
+        "args": "build+flash",
+        "when": "config.workspaceKeybindings.buildAndFlash.enabled"
+    }
+]
