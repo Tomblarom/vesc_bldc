@@ -41,7 +41,7 @@
 #define HW_HAS_DRV8301
 #define HW_HAS_3_SHUNTS
 #define HW_HAS_WHEEL_SPEED_SENSOR
-#define HW_HAS_LUNA_SERIAL_DISPLAY
+#define HW_HAS_BAFANG_SERIAL_DISPLAY
 // #define HW_HAS_PAS_TORQUE_SENSOR
 // #define HW_USE_BRK
 
@@ -65,7 +65,7 @@
 // #define BRK_PIN		            0
 
 #define HW_ADC_INJ_CHANNELS		3
-#define HW_ADC_NBR_CONV			5
+#define HW_ADC_NBR_CONV			4
 #define HW_ADC_CHANNELS			(HW_ADC_NBR_CONV * 3)
 
 // ADC Indexes                 IDX     NAME
@@ -77,12 +77,12 @@
 #define ADC_IND_CURR3			4   // CURR2
 #define ADC_IND_EXT		        6   // THROTTLE     ADC1
 #define ADC_IND_EXT2			7   // TORQUE       ADC2   0.8-3.3V
-#define ADC_IND_EXT3            9   // GEARSENSOR   ADC3
+// #define ADC_IND_EXT3            9   // GEARSENSOR   ADC3
 // #define ADC_IND_PWR_BTN         
 #define ADC_IND_TEMP_MOS		8   // TEMP_MOS
 #define ADC_IND_TEMP_MOTOR		10  // TEMP_MOTOR
 #define ADC_IND_VIN_SENS		11  // VIN_SENS
-#define ADC_IND_VREFINT			12  // VREFINT
+#define ADC_IND_VREFINT			9  // VREFINT
 
 // ADC macros and settings
 #ifndef V_REG

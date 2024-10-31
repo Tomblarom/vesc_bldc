@@ -17,7 +17,7 @@
     */
 
 #include "conf_general.h"
-#ifdef HW_HAS_LUNA_SERIAL_DISPLAY
+#ifdef HW_HAS_BAFANG_SERIAL_DISPLAY
 #include "hw.h"
 #include "bafang_display_serial.h"
 #include "app.h"
@@ -54,9 +54,9 @@
 
 #define CMD_WRITE_BASIC_SUCCESS 0x18
 
-#define LUNA_DISPLAY_BAUD	9600
-#define LUNA_SERIAL_BUFFER_SIZE	32
-#define LUNA_TX_SERIAL_BUFFER_SIZE	32
+#define BAFANG_DISPLAY_BAUD	1200
+#define BAFANG_SERIAL_BUFFER_SIZE	32
+#define BAFANG_TX_SERIAL_BUFFER_SIZE	32
 
 typedef enum {
 	PAS_LEVEL_0 = 0x00,
@@ -70,7 +70,7 @@ typedef enum {
 	PAS_LEVEL_8 = 0x17,
 	PAS_LEVEL_9 = 0x03,
 	PAS_LEVEL_WALK = 0x06,
-} LUNA_PAS_LEVEL;
+} BAFANG_PAS_LEVEL;
 
 typedef enum {
 	WRITE_LOW_BATTERY_ERROR = 0x00,
@@ -83,19 +83,19 @@ typedef enum {
 } CMD_WRITE_BASIC_RESPONSE;
 
 typedef enum {
-	LUNA_ERROR_NONE = 0x00,
-	LUNA_ERROR_BRAKES = 0x03,
-	LUNA_ERROR_HIGH_VOLTAGE = 0x07,
-	LUNA_ERROR_MOTOR_HALL_SENSOR = 0x08,
-	LUNA_ERROR_OVER_TEMPERATURE = 0x10,
-	LUNA_ERROR_CURRENT_SENSOR = 0x12,
-	LUNA_ERROR_BATTERY_TEMPERATURE = 0x13,
-	LUNA_ERROR_WHEEL_SPEED_DETECTION = 0x21,
-	LUNA_ERROR_BMS_COMMUNICATION = 0x22,
-	LUNA_ERROR_TORQUE_SENSOR = 0x25,
-	LUNA_ERROR_SPEED_SENSOR = 0x26,
-	LUNA_ERROR_COMMUNICATION = 0x30,
-} LUNA_ERROR_CODES;
+	BAFANG_ERROR_NONE = 0x00,
+	BAFANG_ERROR_BRAKES = 0x03,
+	BAFANG_ERROR_HIGH_VOLTAGE = 0x07,
+	BAFANG_ERROR_MOTOR_HALL_SENSOR = 0x08,
+	BAFANG_ERROR_OVER_TEMPERATURE = 0x10,
+	BAFANG_ERROR_CURRENT_SENSOR = 0x12,
+	BAFANG_ERROR_BATTERY_TEMPERATURE = 0x13,
+	BAFANG_ERROR_WHEEL_SPEED_DETECTION = 0x21,
+	BAFANG_ERROR_BMS_COMMUNICATION = 0x22,
+	BAFANG_ERROR_TORQUE_SENSOR = 0x25,
+	BAFANG_ERROR_SPEED_SENSOR = 0x26,
+	BAFANG_ERROR_COMMUNICATION = 0x30,
+} BAFANG_ERROR_CODES;
 
 typedef struct {
 	uint8_t header;
@@ -112,31 +112,31 @@ typedef struct {
 typedef struct {
 	unsigned int rd_ptr;
 	unsigned int wr_ptr;
-	unsigned char data[LUNA_SERIAL_BUFFER_SIZE];
-	unsigned char tx[LUNA_TX_SERIAL_BUFFER_SIZE];
-} luna_serial_buffer_t;
+	unsigned char data[BAFANG_SERIAL_BUFFER_SIZE];
+	unsigned char tx[BAFANG_TX_SERIAL_BUFFER_SIZE];
+} bafang_serial_buffer_t;
 
-static volatile LUNA_PAS_LEVEL pas_level = PAS_LEVEL_1;
+static volatile BAFANG_PAS_LEVEL pas_level = PAS_LEVEL_1;
 static volatile bool display_thread_is_running = false;
 static volatile bool display_uart_is_running = false;
 
 /* UART driver configuration structure */
 static SerialConfig uart_cfg = {
-		LUNA_DISPLAY_BAUD,
+		BAFANG_DISPLAY_BAUD,
 		0,
 		0, // USART_CR3_ONEBIT, // USART_CR2_LINEN,
 		0
 };
 
-static luna_serial_buffer_t serial_buffer;
-static controller_info_t controller_info = {0x51,0x10,"LUNA","BBSH","12","55",0x05,250,00};
+static bafang_serial_buffer_t serial_buffer;
+static controller_info_t controller_info = {0x51,0x10,"BFNG","BBSH","12","55",0x05,250,00};
 
 // Threads
 static THD_WORKING_AREA(display_process_thread_wa, 1024);
 static THD_FUNCTION(display_process_thread, arg);
 
 static bool check_assist_level(uint8_t assist_code);
-static LUNA_PAS_LEVEL translate_assist_level(int8_t level);
+static BAFANG_PAS_LEVEL translate_assist_level(int8_t level);
 static void set_assist_level(uint8_t assist_code);
 static uint8_t checksum(uint8_t *buf, uint8_t len);
 static void serial_send_packet(unsigned char *data, unsigned int len);
@@ -165,7 +165,7 @@ void bafang_display_serial_start(int8_t initial_level) {
 	display_uart_is_running = true;
 }
 
-static LUNA_PAS_LEVEL translate_assist_level(int8_t level) {
+static BAFANG_PAS_LEVEL translate_assist_level(int8_t level) {
     switch (level) {
         case 0: return PAS_LEVEL_0;
         case 1: return PAS_LEVEL_1;
@@ -264,7 +264,7 @@ static void serial_display_byte_process(unsigned char byte) {
 
 	uint8_t rd_ptr = serial_buffer.rd_ptr;	//read pointer to try at different start addresses
 
-	serial_send_packet((uint8_t*)&controller_info, sizeof(controller_info_t));
+	// serial_send_packet((uint8_t*)&controller_info, sizeof(controller_info_t));
 	
 	// process with at least 2 bytes available to read
 	while( (serial_buffer.wr_ptr - rd_ptr ) > 1) {
@@ -487,13 +487,13 @@ static void serial_display_byte_process(unsigned char byte) {
 	}
 
 	if(serial_buffer.rd_ptr > 0) {
-		memmove(serial_buffer.data, serial_buffer.data + serial_buffer.rd_ptr, LUNA_SERIAL_BUFFER_SIZE - serial_buffer.rd_ptr);
+		memmove(serial_buffer.data, serial_buffer.data + serial_buffer.rd_ptr, BAFANG_SERIAL_BUFFER_SIZE - serial_buffer.rd_ptr);
 		serial_buffer.wr_ptr -= serial_buffer.rd_ptr;
 		serial_buffer.rd_ptr = 0;
 	}
-	if(serial_buffer.wr_ptr == (LUNA_SERIAL_BUFFER_SIZE - 1) ) {
+	if(serial_buffer.wr_ptr == (BAFANG_SERIAL_BUFFER_SIZE - 1) ) {
 		//shift buffer to the left discarding the oldest byte
-		memmove(serial_buffer.data,serial_buffer.data + 1, LUNA_SERIAL_BUFFER_SIZE - 1);
+		memmove(serial_buffer.data,serial_buffer.data + 1, BAFANG_SERIAL_BUFFER_SIZE - 1);
 		serial_buffer.wr_ptr -= 1;
 	}
 }
@@ -515,7 +515,7 @@ static void serial_display_check_rx(void){
 
 static THD_FUNCTION(display_process_thread, arg) {
 	(void)arg;
-	chRegSetThreadName("Luna serial display");
+	chRegSetThreadName("Bafang serial display");
 
 	event_listener_t el;
 	chEvtRegisterMaskWithFlags(&HW_UART_DEV.event, &el, EVENT_MASK(0), CHN_INPUT_AVAILABLE);

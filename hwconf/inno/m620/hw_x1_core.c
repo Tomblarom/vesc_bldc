@@ -113,20 +113,20 @@ void hw_setup_adc_channels(void) {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_0,		1, t_samp);		//  0  	 0	VOLT1
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_10,		2, t_samp);		//  3  	10	CURR1
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_6,		3, t_samp);		//  6 	 6	THROTTLE [ADC_IND_EXT]
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_9,		4, t_samp);		//  9	 9  GEARSENSOR [ADC_IND_EXT3]
-	ADC_RegularChannelConfig(ADC1, ADC_Channel_Vrefint,	5, t_samp);		//  12 	17	VREFINT
+	// ADC_RegularChannelConfig(ADC1, ADC_Channel_9,		4, t_samp);		//  9	 9  GEARSENSOR [ADC_IND_EXT3]
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_Vrefint,	4, t_samp);		//  9 	17	VREFINT
 	// ADC2 regular channels		
 	ADC_RegularChannelConfig(ADC2, ADC_Channel_1,		1, t_samp);		//  1  	 1	VOLT2
 	ADC_RegularChannelConfig(ADC2, ADC_Channel_11,		2, t_samp);		//	4  	11	CURR2
 	ADC_RegularChannelConfig(ADC2, ADC_Channel_5,		3, t_samp);		//  7 	 5	TORQUE [ADC_IND_EXT2]
 	ADC_RegularChannelConfig(ADC2, ADC_Channel_14,		4, t_samp);		// 10 	14	TEMP_MOTOR
-	ADC_RegularChannelConfig(ADC2, ADC_Channel_3,		5, t_samp);		// 13 	13	UNUSED
+	// ADC_RegularChannelConfig(ADC2, ADC_Channel_3,		5, t_samp);		// 13 	13	UNUSED
 	// ADC3 regular channels		
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_2,		1, t_samp);		//  2  	 2	VOLT3
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_12,		2, t_samp);		//  5  	12	CURR3
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_3,		3, t_samp);		//  8 	 3	TEMP_MOS (PCB)
 	ADC_RegularChannelConfig(ADC3, ADC_Channel_13,		4, t_samp);		// 11 	13	VIN_SENS
-	ADC_RegularChannelConfig(ADC3, ADC_Channel_3,		5, t_samp);		// 14 	13	UNUSED
+	// ADC_RegularChannelConfig(ADC3, ADC_Channel_3,		5, t_samp);		// 14 	13	UNUSED
 
 	// Injected channels
 	ADC_InjectedChannelConfig(ADC1, ADC_Channel_10, 1, t_samp);     // CURR1
