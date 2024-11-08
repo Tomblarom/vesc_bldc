@@ -32,6 +32,7 @@
 #include "stdio.h"
 #include "app.h"
 #include "mempools.h"
+#include "RTT/SEGGER_RTT.h"
 
 // Variables
 static volatile bool i2c_running = false;
@@ -103,6 +104,7 @@ void hw_init_gpio(void) {
 	palSetPadMode(GPIOC, 13, PAL_MODE_INPUT_ANALOG);	// -PWR_BTN
 
 	drv8301_init();
+	SEGGER_RTT_printf(0, "LOL!\r\n");
 	bafang_display_serial_start((int8_t) 3);
 }
 

@@ -31,6 +31,7 @@
 #include <string.h>
 #include "comm_can.h"
 #include "datatypes.h"
+#include "RTT/SEGGER_RTT.h"
 
 #define CMD_READ			0x11
 #define CMD_WRITE			0x16
@@ -288,13 +289,14 @@ static void serial_display_byte_process(unsigned char byte) {
 							if(check_assist_level(serial_buffer.data[rd_ptr + 2])){
 								pas_level = serial_buffer.data[rd_ptr + 2];
 								set_assist_level(pas_level);
+								SEGGER_RTT_printf(0, "CMD_PAS_LEVEL: %d\r\n", pas_level);
 							}
 							serial_buffer.rd_ptr = rd_ptr + 4;	//mark bytes as read
 						}
 					}
 					break;
 				case CMD_WRITE_BASIC:
-					commands_printf("CMD_WRITE_BASIC");
+					SEGGER_RTT_printf(0, "CMD_WRITE_BASIC");
 
 					if ( (serial_buffer.wr_ptr - rd_ptr) < CMD_WRITE_BASIC_LENGTH ) {	//this packet needs 26 bytes
 						break;
@@ -303,7 +305,7 @@ static void serial_display_byte_process(unsigned char byte) {
 					checksum_addr = rd_ptr + CMD_WRITE_BASIC_LENGTH - 1;
 
 					if(checksum_addr <= serial_buffer.wr_ptr) {	//check the checksum has been received
-						commands_printf("checksum received,calculated: %d    %d",serial_buffer.data[checksum_addr],
+						SEGGER_RTT_printf(0, "checksum received,calculated: %d    %d",serial_buffer.data[checksum_addr],
                         		checksum(serial_buffer.data + rd_ptr, CMD_WRITE_BASIC_LENGTH - 1));
 						// check sum
 						if( serial_buffer.data[checksum_addr] ==
@@ -320,7 +322,7 @@ static void serial_display_byte_process(unsigned char byte) {
 							conf_general_store_mc_configuration((mc_configuration*)mcconf, false);
 
 							for(int i = 0; i<=CMD_WRITE_BASIC_LENGTH;i++) {
-								commands_printf("%02x ", serial_buffer.data[rd_ptr + i]);
+								SEGGER_RTT_printf(0, "%02x ", serial_buffer.data[rd_ptr + i]);
 							}
                             
 							serial_buffer.rd_ptr = rd_ptr + CMD_WRITE_BASIC_LENGTH;	//mark bytes as read
@@ -364,7 +366,7 @@ static void serial_display_byte_process(unsigned char byte) {
 					continue;
 				case CMD_READ_BASIC:
 					{
-					commands_printf("CMD_READ_BASIC");
+					SEGGER_RTT_printf(0, "CMD_READ_BASIC");
 
 					volatile mc_configuration *mcconf = (volatile mc_configuration*) mc_interface_get_configuration();
 
@@ -397,7 +399,7 @@ static void serial_display_byte_process(unsigned char byte) {
 					serial_buffer.tx[26] = checksum(serial_buffer.tx + 2, CMD_READ_BASIC_LENGTH - 3);
 
 					for(int i = 0; i<=CMD_READ_BASIC_LENGTH;i++) {
-						commands_printf("%02x ", serial_buffer.tx[i]);
+						SEGGER_RTT_printf(0, "%02x ", serial_buffer.tx[i]);
 					}
 					serial_send_packet(serial_buffer.tx, CMD_READ_BASIC_LENGTH);
 					rd_ptr +=2;
