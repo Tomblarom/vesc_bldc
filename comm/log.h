@@ -47,4 +47,10 @@ void log_send_samples_f32(
 		float *samples,
 		int sample_num);
 
+#define __FILENAME__ (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
+
+#define LOG_DEBUG(format, ...) log_debug(__FILENAME__, __LINE__, format, ##__VA_ARGS__)
+
+void log_debug(const char *file, int line, const char *format, ...);
+
 #endif /* COMM_LOG_H_ */

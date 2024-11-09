@@ -27,6 +27,7 @@
 #include "buffer.h"
 #include "datatypes.h"
 #include "mempools.h"
+#include "RTT/SEGGER_RTT.h"
 
 void log_start(
 		int can_id,
@@ -160,6 +161,33 @@ void log_send_samples_f64(
 	}
 
 	mempools_free_packet_buffer(buffer);
+}
+
+void log_debug(const char *file, int line, const char *format, ...) {
+    // Get the current time
+    systime_t last_time = chVTGetSystemTimeX() / 10;
+    uint32_t seconds = (uint32_t)(last_time / 1000);
+    uint32_t milliseconds = (uint32_t)(last_time % 1000);
+    // Format the time as hh:mm:ss:ms
+    char time_str[12];
+    time_str[0] = (seconds / 3600) % 24 + '0';
+    time_str[1] = (seconds / 60) % 60 + '0';
+    time_str[2] = ':';
+    time_str[3] = (seconds % 60) / 10 + '0';
+    time_str[4] = (seconds % 60) % 10 + '0';
+    time_str[5] = ':';
+    time_str[6] = (milliseconds / 100) + '0';
+    time_str[7] = (milliseconds / 10) % 10 + '0';
+    time_str[8] = (milliseconds % 10) + '0';
+    time_str[9] = '\0';
+
+    // Print the time, file, line, and log message
+    va_list args;
+    va_start(args, format);
+    SEGGER_RTT_printf(0, "%s [%s:%d]: ", time_str, file, line);
+    SEGGER_RTT_vprintf(0, format, &args);
+    //SEGGER_RTT_printf(0, "\r\n"); //jump a line if needed
+    va_end(args);
 }
 
 #pragma GCC pop_options
