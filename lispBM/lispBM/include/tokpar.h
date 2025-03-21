@@ -37,7 +37,8 @@
 #define TOKCLOSECURL    13u     // "}"
 #define TOKCONSTSTART   14u     // "@const-start"
 #define TOKCONSTEND     15u     // "@const-end"
-#define TOKCONSTSYMSTR  16u     // "@const-symbol-strings"
+#define TOKOPENARRAY    16u     // "[|"
+#define TOKCLOSEARRAY   17u     // "|]"
 
 #define TOKTYPEBYTE     100u
 #define TOKTYPEI        101u

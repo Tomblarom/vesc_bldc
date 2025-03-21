@@ -1,5 +1,5 @@
 /*
-    Copyright 2018, 2020, 2021, 2022 Joel Svensson  svenssonjoel@yahoo.se
+    Copyright 2018, 2020 - 2025 Joel Svensson  svenssonjoel@yahoo.se
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -48,13 +48,13 @@ extern "C" {
 /** The eval_context_t struct represents a lispbm process.
  *
  */
-#define LBM_THREAD_STATE_READY      (uint32_t)0
-#define LBM_THREAD_STATE_BLOCKED    (uint32_t)1
-#define LBM_THREAD_STATE_TIMEOUT    (uint32_t)2
-#define LBM_THREAD_STATE_SLEEPING   (uint32_t)4
-#define LBM_THREAD_STATE_RECV_BL    (uint32_t)8
-#define LBM_THREAD_STATE_RECV_TO    (uint32_t)16
-#define LBM_THREAD_STATE_GC_BIT     (uint32_t)(1 << 31)
+#define LBM_THREAD_STATE_READY      (uint32_t)0u
+#define LBM_THREAD_STATE_BLOCKED    (uint32_t)1u
+#define LBM_THREAD_STATE_TIMEOUT    (uint32_t)2u
+#define LBM_THREAD_STATE_SLEEPING   (uint32_t)4u
+#define LBM_THREAD_STATE_RECV_BL    (uint32_t)8u
+#define LBM_THREAD_STATE_RECV_TO    (uint32_t)16u
+#define LBM_THREAD_STATE_GC_BIT     (uint32_t)(1u << 31)
 
 #define LBM_IS_STATE_TIMEOUT(X) (X & (LBM_THREAD_STATE_TIMEOUT | LBM_THREAD_STATE_RECV_TO))
 #define LBM_IS_STATE_WAKE_UP_WAKABLE(X) (X & (LBM_THREAD_STATE_SLEEPING | LBM_IS_STATE_TIMEOUT(X)))
@@ -126,11 +126,19 @@ lbm_value eval_cps_get_env(void);
  * \return 1 on success and 0 on failure.
  */
 int lbm_eval_init(void);
+#ifdef LBM_USE_TIME_QUOTA
+/**  Set a new value to use as time quota.
+ *   This changes the scheduling interval.
+ *   \param quota The new quota.
+ */
+void lbm_set_eval_time_quota(uint32_t quota);
+#else
 /**  Set a new value to use as step quota.
  *   This changes the scheduling interval.
  *   \param quota The new quota.
  */
 void lbm_set_eval_step_quota(uint32_t quota);
+#endif
 /** Initialize events
  * \param num_events The maximum number of unprocessed events.
  * \return true on success, false otherwise.
@@ -300,6 +308,14 @@ bool lbm_unblock_ctx_r(lbm_cid cid);
  * \return True on successfully unblocking. False otherwise.
  */
 bool lbm_unblock_ctx_unboxed(lbm_cid cid, lbm_value unboxed);
+/**  Iterate over ALL contexts and apply function on each context.
+ *   This includes the currently running context, if there is one.
+ *
+ * \param f Function to apply to each context.
+ * \param arg1 Pointer argument that can be used to convey information back to user.
+ * \param arg2 Same as above.
+ */
+void lbm_all_ctxs_iterator(ctx_fun f, void *arg1, void *arg2);
 /**  Iterate over all ready contexts and apply function on each context.
  *
  * \param f Function to apply to each context.
@@ -322,6 +338,10 @@ void lbm_toggle_verbose(void);
  * \param verbose Boolean to turn verbose errors on or off.
  */
 void lbm_set_verbose(bool verbose);
+/** Hide error messages for trapped errors
+ * \param hide true to hide error messages when trapped.
+ */
+void lbm_set_hide_trapped_error(bool hide);
 /** Set a usleep callback for use by the evaluator thread.
  *
  * \param fptr Pointer to a sleep function.
@@ -359,7 +379,10 @@ lbm_cid lbm_get_current_cid(void);
  * a guarantee that a context is running
  */
 eval_context_t *lbm_get_current_context(void);
-
+/** Surrenders remaining eval quota.
+ *  Call this from extensions that takes non-trivial amounts of time.
+ */
+void lbm_surrender_quota(void);
 /** Change the mailbox size for a given context.
  * \param ctx The context to change mailbox size for.
  * \param new_size The new size of the mailbox.
@@ -367,6 +390,12 @@ eval_context_t *lbm_get_current_context(void);
  */
 bool lbm_mailbox_change_size(eval_context_t *ctx, lbm_uint new_size);
 
+/** Create a string channel from a C string. 
+ * \param str Zero terminated C string.
+ * \param res Resulting string channel.
+ * \param dep Dependency that must be kept alive for as long as string channel is alive.
+ * \ return true on success and false otherwise. 
+ */
 bool create_string_channel(char *str, lbm_value *res, lbm_value dep);
 
 bool lift_char_channel(lbm_char_channel_t *ch, lbm_value *res);
@@ -378,9 +407,9 @@ lbm_flash_status request_flash_storage_cell(lbm_value val, lbm_value *res);
  *
  * \param cid Process to deliver to.
  * \param msg Message to deliver
- * \return 0 on success negative value on error.
+ * \return true on success false on failure.
  */
-int lbm_find_receiver_and_send(lbm_cid cid, lbm_value msg);
+bool lbm_find_receiver_and_send(lbm_cid cid, lbm_value msg);
 /** Perform garbage collection,
  * If this is called from another thread than the eval thread, evaluation must be
  * paused! Or there will be lots of trouble!
