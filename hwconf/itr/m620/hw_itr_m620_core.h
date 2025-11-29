@@ -17,11 +17,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
     */
 
-#ifndef HW_ITR_X1_CORE_H_
-#define HW_ITR_X1_CORE_H_
+#ifndef HW_ITR_M620_CORE_H_
+#define HW_ITR_M620_CORE_H_
 
-#ifdef HW_ITR_X1
-  #define HW_NAME			"ITR_X1"
+//#define FW_NAME					"2025.10.10"
+
+#include "mcconf_itr_m620.h"
+#include "appconf_itr_m620.h"
+
+#ifdef HW_ITR_M620
+  #define HW_NAME			"ITR_M620"
 #else
   #error "Must define hardware type"
 #endif
@@ -210,10 +215,10 @@
 
 // Default setting overrides
 #ifndef MCCONF_L_MIN_VOLTAGE
-#define MCCONF_L_MIN_VOLTAGE			15.0		// Minimum voltage input
+#define MCCONF_L_MIN_VOLTAGE			8.0		// Minimum voltage input
 #endif
 #ifndef MCCONF_L_MAX_VOLTAGE
-#define MCCONF_L_MAX_VOLTAGE			50.0	// Maximum input voltage
+#define MCCONF_L_MAX_VOLTAGE			59.5	// Maximum input voltage
 #endif
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
 #define MCCONF_DEFAULT_MOTOR_TYPE		MOTOR_TYPE_FOC
@@ -228,20 +233,20 @@
 #define MCCONF_FOC_SAMPLE_V0_V7			false	// Run control loop in both v0 and v7 (requires phase shunts)
 #endif
 #ifndef MCCONF_L_IN_CURRENT_MAX
-#define MCCONF_L_IN_CURRENT_MAX			60.0	// Input current limit in Amperes (Upper)
+#define MCCONF_L_IN_CURRENT_MAX			100.0	// Input current limit in Amperes (Upper)
 #endif
 #ifndef MCCONF_L_IN_CURRENT_MIN
-#define MCCONF_L_IN_CURRENT_MIN			-60.0	// Input current limit in Amperes (Lower)
+#define MCCONF_L_IN_CURRENT_MIN			-10.0	// Input current limit in Amperes (Lower)
 #endif
 
 // Setting limits
 #define HW_LIM_CURRENT			-150.0, 150.0
 #define HW_LIM_CURRENT_IN		-130.0, 130.0
 #define HW_LIM_CURRENT_ABS		0.0, 160.0
-#define HW_LIM_VIN				11.0, 58.0
+#define HW_LIM_VIN				8.0, 59.5
 #define HW_LIM_ERPM				-200e3, 200e3
-#define HW_LIM_DUTY_MIN			0.0, 0.1
-#define HW_LIM_DUTY_MAX			0.0, 0.99
+#define HW_LIM_DUTY_MIN			0.005, 0.1
+#define HW_LIM_DUTY_MAX			0.0, 0.95
 #define HW_LIM_TEMP_FET			-40.0, 110.0
 
-#endif /* HW_ITR_X1_CORE_H_ */
+#endif /* HW_ITR_M620_CORE_H_ */
