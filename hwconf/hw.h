@@ -38,6 +38,9 @@
 #ifdef HW_HAS_DRV8323S
 #include "drv8323s.h"
 #endif
+#ifdef HW_HAS_DRV8350S
+#include "drv8350s.h"
+#endif
 
 #ifndef HW_NAME
 #error "No hardware name set"
