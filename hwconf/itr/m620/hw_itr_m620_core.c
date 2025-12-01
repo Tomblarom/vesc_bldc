@@ -140,7 +140,7 @@ void hw_init_gpio(void) {
 	ENABLE_GATE();
 
 	// Fault
-	palSetPadMode(GPIOC, 7, PAL_MODE_INPUT);
+	palSetPadMode(GPIOB, 7, PAL_MODE_INPUT);
 
 	// Hold power on for now
 	palSetPadMode(HW_PWR_GPIO, HW_PWR_PIN, PAL_MODE_INPUT);

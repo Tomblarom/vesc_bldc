@@ -212,6 +212,9 @@ void mc_interface_init(void) {
 	drv8323s_set_oc_mode(motor_now()->m_conf.m_drv8301_oc_mode);
 	drv8323s_set_oc_adj(motor_now()->m_conf.m_drv8301_oc_adj);
 	DRV8323S_CUSTOM_SETTINGS();
+#elif defined(HW_HAS_DRV8350S)
+	drv8350s_set_oc_mode(motor_now()->m_conf.m_drv8301_oc_mode);
+	drv8350s_set_oc_adj(motor_now()->m_conf.m_drv8301_oc_adj);
 #endif
 
 #if defined HW_HAS_DUAL_MOTORS || defined HW_HAS_DUAL_PARALLEL
@@ -226,6 +229,9 @@ void mc_interface_init(void) {
 	drv8323s_set_oc_mode(motor_now()->m_conf.m_drv8301_oc_mode);
 	drv8323s_set_oc_adj(motor_now()->m_conf.m_drv8301_oc_adj);
 	DRV8323S_CUSTOM_SETTINGS();
+#elif defined(HW_HAS_DRV8350S)
+	drv8350s_set_oc_mode(motor_now()->m_conf.m_drv8301_oc_mode);
+	drv8350s_set_oc_adj(motor_now()->m_conf.m_drv8301_oc_adj);
 #endif
 #endif
 	mc_interface_select_motor_thread(motor_old);
@@ -336,6 +342,9 @@ void mc_interface_set_configuration(mc_configuration *configuration) {
 #elif defined(HW_HAS_DRV8323S)
 	drv8323s_set_oc_mode(configuration->m_drv8301_oc_mode);
 	drv8323s_set_oc_adj(configuration->m_drv8301_oc_adj);
+#elif defined(HW_HAS_DRV8350S)
+	drv8350s_set_oc_mode(configuration->m_drv8301_oc_mode);
+	drv8350s_set_oc_adj(configuration->m_drv8301_oc_adj);
 #endif
 
 #ifdef HW_HAS_DUAL_PARALLEL
@@ -349,6 +358,9 @@ void mc_interface_set_configuration(mc_configuration *configuration) {
 #elif defined(HW_HAS_DRV8323S)
 	drv8323s_set_oc_mode(configuration->m_drv8301_oc_mode);
 	drv8323s_set_oc_adj(configuration->m_drv8301_oc_adj);
+#elif defined(HW_HAS_DRV8350S)
+	drv8350s_set_oc_mode(configuration->m_drv8301_oc_mode);
+	drv8350s_set_oc_adj(configuration->m_drv8301_oc_adj);
 #endif
 	mc_interface_select_motor_thread(1);
 #endif

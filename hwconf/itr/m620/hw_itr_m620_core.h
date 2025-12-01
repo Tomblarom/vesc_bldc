@@ -20,7 +20,7 @@
 #ifndef HW_ITR_M620_CORE_H_
 #define HW_ITR_M620_CORE_H_
 
-//#define FW_NAME					"2025.10.10"
+#define FW_NAME					"2025.12.01"
 
 #include "mcconf_itr_m620.h"
 #include "appconf_itr_m620.h"
@@ -215,38 +215,42 @@
 
 // Default setting overrides
 #ifndef MCCONF_L_MIN_VOLTAGE
-#define MCCONF_L_MIN_VOLTAGE			8.0		// Minimum voltage input
+#define MCCONF_L_MIN_VOLTAGE			  8     // Minimum voltage input
 #endif
 #ifndef MCCONF_L_MAX_VOLTAGE
-#define MCCONF_L_MAX_VOLTAGE			59.5	// Maximum input voltage
+#define MCCONF_L_MAX_VOLTAGE			  59.5	// Maximum input voltage
+#endif
+#ifndef MCCONF_L_WATT_MIN
+#define MCCONF_L_WATT_MIN			      -2000 // Maximum Braking Wattage
+#endif
+#ifndef MCCONF_L_WATT_MAX
+#define MCCONF_L_WATT_MAX           3500  // Maximum Wattage
 #endif
 #ifndef MCCONF_DEFAULT_MOTOR_TYPE
 #define MCCONF_DEFAULT_MOTOR_TYPE		MOTOR_TYPE_FOC
 #endif
 #ifndef MCCONF_FOC_F_ZV
-#define MCCONF_FOC_F_ZV					30000.0
+#define MCCONF_FOC_F_ZV					    30000.0
 #endif
 #ifndef MCCONF_L_MAX_ABS_CURRENT
-#define MCCONF_L_MAX_ABS_CURRENT		150.0	// The maximum absolute current above which a fault is generated
-#endif
-#ifndef MCCONF_FOC_SAMPLE_V0_V7
-#define MCCONF_FOC_SAMPLE_V0_V7			false	// Run control loop in both v0 and v7 (requires phase shunts)
+#define MCCONF_L_MAX_ABS_CURRENT		150.0 // The maximum absolute current above which a fault is generated
 #endif
 #ifndef MCCONF_L_IN_CURRENT_MAX
-#define MCCONF_L_IN_CURRENT_MAX			100.0	// Input current limit in Amperes (Upper)
+#define MCCONF_L_IN_CURRENT_MAX			100   // Input current limit in Amperes (Upper)
 #endif
 #ifndef MCCONF_L_IN_CURRENT_MIN
 #define MCCONF_L_IN_CURRENT_MIN			-10.0	// Input current limit in Amperes (Lower)
 #endif
 
 // Setting limits
-#define HW_LIM_CURRENT			-150.0, 150.0
-#define HW_LIM_CURRENT_IN		-130.0, 130.0
-#define HW_LIM_CURRENT_ABS		0.0, 160.0
-#define HW_LIM_VIN				8.0, 59.5
-#define HW_LIM_ERPM				-200e3, 200e3
-#define HW_LIM_DUTY_MIN			0.005, 0.1
-#define HW_LIM_DUTY_MAX			0.0, 0.95
+#define HW_LIM_CURRENT	   -150.0, 150.0
+#define HW_LIM_CURRENT_IN  -130.0, 130.0
+#define HW_LIM_CURRENT_ABS	  0.0, 160.0
+#define HW_LIM_VIN				    8.0, 59.5
+#define HW_LIM_ERPM				 -200e3, 200e3
+#define HW_LIM_DUTY_MIN		    0.0, 0.1
+#define HW_LIM_DUTY_MAX			  0.0, 0.99
 #define HW_LIM_TEMP_FET			-40.0, 110.0
+
 
 #endif /* HW_ITR_M620_CORE_H_ */

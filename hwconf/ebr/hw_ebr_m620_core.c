@@ -26,7 +26,6 @@
 #include "lispif.h"
 #include "lispbm.h"
 #include "utils.h"
-#include "drv8350s.h"
 
 // Variables
 static volatile bool i2c_running = false;

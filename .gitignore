@@ -17,3 +17,6 @@ workspace.code-workspace
 *.pro.shared
 
 .vscode
+
+hwconf/**/docs
+hwconf/**/**/docs
