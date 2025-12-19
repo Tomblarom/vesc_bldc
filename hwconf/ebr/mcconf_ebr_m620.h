@@ -16,16 +16,16 @@
 #define MCCONF_SENSOR_MODE 0
 
 // Motor Current Max
-#define MCCONF_L_CURRENT_MAX 100
+#define MCCONF_L_CURRENT_MAX 90
 
 // Motor Current Max Brake
-#define MCCONF_L_CURRENT_MIN -100
+#define MCCONF_L_CURRENT_MIN -60
 
 // Battery Current Max
-#define MCCONF_L_IN_CURRENT_MAX 100
+#define MCCONF_L_IN_CURRENT_MAX 60
 
 // Battery Current Max Regen
-#define MCCONF_L_IN_CURRENT_MIN -10
+#define MCCONF_L_IN_CURRENT_MIN -6
 
 // Input Current Limit Map Start
 #define MCCONF_L_IN_CURRENT_MAP_START 1
@@ -34,13 +34,13 @@
 #define MCCONF_L_IN_CURRENT_MAP_FILTER 0.005
 
 // Absolute Maximum Current
-#define MCCONF_L_MAX_ABS_CURRENT 150
+#define MCCONF_L_MAX_ABS_CURRENT 160
 
 // Max ERPM Reverse
-#define MCCONF_L_RPM_MIN -15000
+#define MCCONF_L_RPM_MIN -100000
 
 // Max ERPM
-#define MCCONF_L_RPM_MAX 15000
+#define MCCONF_L_RPM_MAX 10000
 
 // ERPM Limit Start
 #define MCCONF_L_RPM_START 0.6
@@ -52,16 +52,16 @@
 #define MCCONF_L_CURR_MAX_RPM_FBRAKE_CC 1500
 
 // Minimum Input Voltage
-#define MCCONF_L_MIN_VOLTAGE 8
+#define MCCONF_L_MIN_VOLTAGE 15
 
 // Maximum Input Voltage
 #define MCCONF_L_MAX_VOLTAGE 59.5
 
 // Battery Voltage Cutoff Start
-#define MCCONF_L_BATTERY_CUT_START 44.5
+#define MCCONF_L_BATTERY_CUT_START 10
 
 // Battery Voltage Cutoff End
-#define MCCONF_L_BATTERY_CUT_END 42
+#define MCCONF_L_BATTERY_CUT_END 8
 
 // Battery Voltage Regen Cutoff Start
 #define MCCONF_L_BATTERY_REGEN_CUT_START 1000
@@ -73,19 +73,19 @@
 #define MCCONF_L_SLOW_ABS_OVERCURRENT 0
 
 // MOSFET Temp Cutoff Start
-#define MCCONF_L_LIM_TEMP_FET_START 60
+#define MCCONF_L_LIM_TEMP_FET_START 85
 
 // MOSFET Temp Cutoff End
-#define MCCONF_L_LIM_TEMP_FET_END 70
+#define MCCONF_L_LIM_TEMP_FET_END 100
 
 // Motor Temp Cutoff Start
-#define MCCONF_L_LIM_TEMP_MOTOR_START 120
+#define MCCONF_L_LIM_TEMP_MOTOR_START 85
 
 // Motor Temp Cutoff End
-#define MCCONF_L_LIM_TEMP_MOTOR_END 140
+#define MCCONF_L_LIM_TEMP_MOTOR_END 100
 
 // Acceleration Temperature Decrease
-#define MCCONF_L_LIM_TEMP_ACCEL_DEC 0.01
+#define MCCONF_L_LIM_TEMP_ACCEL_DEC 0
 
 // Minimum Duty Cycle
 #define MCCONF_L_MIN_DUTY 0.005
@@ -163,7 +163,7 @@
 #define MCCONF_FOC_CURRENT_KI 32
 
 // Zero Vector Frequency
-#define MCCONF_FOC_F_ZV 30000
+#define MCCONF_FOC_F_ZV 25000
 
 // Dead Time Compensation
 #define MCCONF_FOC_DT_US 0.12
@@ -172,7 +172,7 @@
 #define MCCONF_FOC_ENCODER_INVERTED 1
 
 // Encoder Offset
-#define MCCONF_FOC_ENCODER_OFFSET 270
+// #define MCCONF_FOC_ENCODER_OFFSET 163.4
 
 // Encoder Ratio
 #define MCCONF_FOC_ENCODER_RATIO 4
@@ -220,16 +220,10 @@
 #define MCCONF_FOC_START_CURR_DEC_RPM 2500
 
 // Openloop ERPM
-#define MCCONF_FOC_OPENLOOP_RPM 1500
+#define MCCONF_FOC_OPENLOOP_RPM 3500
 
 // Openloop ERPM at Min Current
 #define MCCONF_FOC_OPENLOOP_RPM_LOW 0
-
-// D Axis Gain Scaling Start
-#define MCCONF_FOC_D_GAIN_SCALE_START 0.9
-
-// D Axis Gain Scaling at Max Mod
-#define MCCONF_FOC_D_GAIN_SCALE_MAX_MOD 0.2
 
 // Openloop Hysteresis
 #define MCCONF_FOC_SL_OPENLOOP_HYST 0.1
@@ -277,10 +271,10 @@
 #define MCCONF_FOC_HALL_INTERP_ERPM 500
 
 // Sensored ERPM Start
-#define MCCONF_FOC_SL_ERPM_START 1800
+#define MCCONF_FOC_SL_ERPM_START 1350
 
 // Sensorless ERPM
-#define MCCONF_FOC_SL_ERPM 3500
+#define MCCONF_FOC_SL_ERPM 1500
 
 // Control Sample Mode
 #define MCCONF_FOC_CONTROL_SAMPLE_MODE 0
@@ -298,7 +292,7 @@
 #define MCCONF_FOC_TEMP_COMP 0
 
 // Temp Comp Base Temp
-#define MCCONF_FOC_TEMP_COMP_BASE_TEMP 25
+#define MCCONF_FOC_TEMP_COMP_BASE_TEMP 22.5
 
 // Current Filter Constant
 #define MCCONF_FOC_CURRENT_FILTER_CONST 0.1
@@ -307,7 +301,7 @@
 #define MCCONF_FOC_CC_DECOUPLING 0
 
 // Observer Type
-#define MCCONF_FOC_OBSERVER_TYPE 3
+#define MCCONF_FOC_OBSERVER_TYPE 0
 
 // HFI Ambiguity Resolve Mode
 #define MCCONF_FOC_HFI_AMB_MODE 0
@@ -319,13 +313,13 @@
 #define MCCONF_FOC_HFI_AMB_TRES 15
 
 // HFI Start Voltage
-#define MCCONF_FOC_HFI_VOLTAGE_START 20
+#define MCCONF_FOC_HFI_VOLTAGE_START 30
 
 // HFI Run Voltage
-#define MCCONF_FOC_HFI_VOLTAGE_RUN 4
+#define MCCONF_FOC_HFI_VOLTAGE_RUN 8
 
 // HFI Max Voltage
-#define MCCONF_FOC_HFI_VOLTAGE_MAX 10
+#define MCCONF_FOC_HFI_VOLTAGE_MAX 12
 
 // HFI Gain
 #define MCCONF_FOC_HFI_GAIN 0.3
@@ -337,10 +331,13 @@
 #define MCCONF_FOC_HFI_HYST 0
 
 // Sensorless ERPM HFI
-#define MCCONF_FOC_SL_ERPM_HFI 2000
+#define MCCONF_FOC_SL_ERPM_HFI 3000
+
+// HFI Reset ERPM
+#define MCCONF_FOC_HFI_RESET_ERPM 500
 
 // HFI Start Samples
-#define MCCONF_FOC_HFI_START_SAMPLES 65
+#define MCCONF_FOC_HFI_START_SAMPLES 5
 
 // HFI Observer Override Time
 #define MCCONF_FOC_HFI_OBS_OVR_SEC 0.001
@@ -352,22 +349,22 @@
 #define MCCONF_FOC_OFFSETS_CAL_MODE 4
 
 // Current Offset 0
-#define MCCONF_FOC_OFFSETS_CURRENT_0 2077.54
+#define MCCONF_FOC_OFFSETS_CURRENT_0 2077.23
 
 // Current Offset 1
-#define MCCONF_FOC_OFFSETS_CURRENT_1 2023.31
+#define MCCONF_FOC_OFFSETS_CURRENT_1 2002.12
 
 // Current Offset 2
-#define MCCONF_FOC_OFFSETS_CURRENT_2 2079.1
+#define MCCONF_FOC_OFFSETS_CURRENT_2 2078.78
 
 // Voltage Offset 0
-#define MCCONF_FOC_OFFSETS_VOLTAGE_0 0.0021
+#define MCCONF_FOC_OFFSETS_VOLTAGE_0 0.0024
 
 // Voltage Offset 1
-#define MCCONF_FOC_OFFSETS_VOLTAGE_1 0.0002
+#define MCCONF_FOC_OFFSETS_VOLTAGE_1 0.0005
 
 // Voltage Offset 2
-#define MCCONF_FOC_OFFSETS_VOLTAGE_2 -0.0024
+#define MCCONF_FOC_OFFSETS_VOLTAGE_2 -0.0029
 
 // Voltage Offset Undriven 0
 #define MCCONF_FOC_OFFSETS_VOLTAGE_UNDRIVEN_0 0
@@ -403,7 +400,7 @@
 #define MCCONF_FOC_FW_Q_CURRENT_FACTOR 0.02
 
 // Speed Tracker Position Source
-#define MCCONF_FOC_SPEED_SOURCE 0
+#define MCCONF_FOC_SPEED_SOURCE 1
 
 // Short Low-Side FETs on Zero Duty
 #define MCCONF_FOC_SHORT_LS_ON_ZERO_DUTY 0
@@ -439,13 +436,13 @@
 #define MCCONF_S_PID_SPEED_SOURCE 0
 
 // Position PID Kp
-#define MCCONF_P_PID_KP 0.03
+#define MCCONF_P_PID_KP 0.025
 
 // Position PID Ki
 #define MCCONF_P_PID_KI 0
 
 // Position PID Kd
-#define MCCONF_P_PID_KD 0.0004
+#define MCCONF_P_PID_KD 0
 
 // Position PID Kd Process
 #define MCCONF_P_PID_KD_PROC 0.00035
@@ -532,7 +529,7 @@
 #define MCCONF_M_OUT_AUX_MODE 4
 
 // Motor Temperature Sensor Type
-#define MCCONF_M_MOTOR_TEMP_SENS_TYPE 1
+#define MCCONF_M_MOTOR_TEMP_SENS_TYPE 2
 
 // Coefficient for PTC Motor Thermistor
 #define MCCONF_M_PTC_MOTOR_COEFF 0.61
@@ -550,7 +547,7 @@
 #define MCCONF_M_BATT_FILTER_CONST 45
 
 // Motor Poles
-#define MCCONF_SI_MOTOR_POLES 4
+#define MCCONF_SI_MOTOR_POLES 14
 
 // Gear Ratio
 #define MCCONF_SI_GEAR_RATIO 3
@@ -562,10 +559,10 @@
 #define MCCONF_SI_BATTERY_TYPE 0
 
 // Battery Cells Series
-#define MCCONF_SI_BATTERY_CELLS 14
+#define MCCONF_SI_BATTERY_CELLS 13
 
 // Battery Capacity
-#define MCCONF_SI_BATTERY_AH 14
+#define MCCONF_SI_BATTERY_AH 12
 
 // Motor No Load Current
 #define MCCONF_SI_MOTOR_NL_CURRENT 1

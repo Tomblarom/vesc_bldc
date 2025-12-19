@@ -20,7 +20,7 @@
 #ifndef HW_EBR_M620_CORE_H_
 #define HW_EBR_M620_CORE_H_
 
-#define FW_NAME					"2025.12.01"
+#define FW_NAME					"2025.12.12"
 
 #include "mcconf_ebr_m620.h"
 #include "appconf_ebr_m620.h"
@@ -253,7 +253,7 @@
 #define HW_LIM_CURRENT	   -150.0, 150.0
 #define HW_LIM_CURRENT_IN  -130.0, 130.0
 #define HW_LIM_CURRENT_ABS	  0.0, 160.0
-#define HW_LIM_VIN				    8.0, 59.5
+#define HW_LIM_VIN				    8.0, 80.0
 #define HW_LIM_ERPM				 -200e3, 200e3
 #define HW_LIM_DUTY_MIN		    0.0, 0.1
 #define HW_LIM_DUTY_MAX			  0.0, 0.99
