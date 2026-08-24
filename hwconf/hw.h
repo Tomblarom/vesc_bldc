@@ -649,6 +649,12 @@
 #endif
 #endif
 
+#ifdef HW_HAS_DRV8350S
+#ifndef DRV8350S_CUSTOM_SETTINGS
+#define DRV8350S_CUSTOM_SETTINGS()
+#endif
+#endif
+
 #ifndef HW_PAS1_PORT
 #define HW_PAS1_PORT			HW_UART_RX_PORT
 #define HW_PAS1_PIN				HW_UART_RX_PIN
