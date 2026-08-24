@@ -20,7 +20,7 @@
 #ifndef HW_EBR_M620_CORE_H_
 #define HW_EBR_M620_CORE_H_
 
-#define FW_NAME					"2025.11.29"
+#define FW_NAME					"ebr_m620_2.0"
 
 #ifdef HW_EBR_M620
   #define HW_NAME			"EBR_M620"
@@ -31,9 +31,15 @@
 // HW properties
 #define HW_HAS_DRV8350S // idrive tuned for NTBLS0D8N08XTXG (TOLL FETs)
 #define DRV8350S_CUSTOM_SETTINGS() \
-		drv8350s_write_reg(3, 0x034B); /* HS gate drive: ~1.3A src / 2.0A sink, 100 ns DT */ \
-		drv8350s_write_reg(4, 0x073B); /* LS gate drive: ~1.3A src / 2.0A sink, 100 ns DT */ \
-		drv8350s_write_reg(5, 0x01A9); /* OCP: CBC retry, 100 ns DT, 4 us deglitch, VDS=0.237V */
+		/* 00000 LLL PPPP NNNN - L=LOCK, P=IDRIVEP_HS, N=IDRIVEN_HS */ \
+		/* 00000 011 0100 0100: unlocked, HS source 300 mA, sink 600 mA */ \
+		drv8350s_write_reg(3, 0b0000001101000100); \
+		/* 00000 C TT PPPP NNNN - C=CBC, TT=TDRIVE, P=IDRIVEP_LS, N=IDRIVEN_LS */ \
+		/* 00000 1 01 0100 0100: CBC, 1 us TDRIVE, LS source 300 mA, sink 600 mA */ \
+		drv8350s_write_reg(4, 0b0000010101000100); \
+		/* 00000 T DD MM OO VVVV - T=TRETRY, DD=DEAD_TIME, MM=OCP_MODE, OO=OCP_DEG, VVVV=VDS_LVL */ \
+		/* 00000 0 01 01 10 0110: 8 ms retry, 100 ns DT, auto-retry, 4 us deglitch, VDS=0.3 V */ \
+		drv8350s_write_reg(5, 0b0000000101100110);
     
 #define HW_HAS_3_SHUNTS
 //#define INVERTED_SHUNT_POLARITY
