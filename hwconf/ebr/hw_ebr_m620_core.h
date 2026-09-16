@@ -1,5 +1,6 @@
 /*
-	Copyright 2023 Benjamin Vedder	benjamin@vedder.se
+	Copyright 2026 Kim Bogner       kim@ebikerepair.eu
+  Copyright 2023 Benjamin Vedder	benjamin@vedder.se
 
 	This file is part of the VESC firmware.
 
@@ -20,26 +21,20 @@
 #ifndef HW_EBR_M620_CORE_H_
 #define HW_EBR_M620_CORE_H_
 
-#define FW_NAME					"ebr_m620_2.0"
-
-#ifdef HW_EBR_M620
-  #define HW_NAME			"EBR_M620"
-#else
-  #error "Must define hardware type"
-#endif
+#define FW_NAME	"2026.09.16"
 
 // HW properties
 #define HW_HAS_DRV8350S // idrive tuned for NTBLS0D8N08XTXG (TOLL FETs)
 #define DRV8350S_CUSTOM_SETTINGS() \
 		/* 00000 LLL PPPP NNNN - L=LOCK, P=IDRIVEP_HS, N=IDRIVEN_HS */ \
-		/* 00000 011 0100 0100: unlocked, HS source 300 mA, sink 600 mA */ \
-		drv8350s_write_reg(3, 0b0000001101000100); \
+		/* 00000 011 1010 1010: unlocked, HS source 650 mA, sink 1300 mA */ \
+		drv8350s_write_reg(3, 0b0000001110101010); \
 		/* 00000 C TT PPPP NNNN - C=CBC, TT=TDRIVE, P=IDRIVEP_LS, N=IDRIVEN_LS */ \
-		/* 00000 1 01 0100 0100: CBC, 1 us TDRIVE, LS source 300 mA, sink 600 mA */ \
-		drv8350s_write_reg(4, 0b0000010101000100); \
+		/* 00000 1 01 1010 1010: CBC, 1 us TDRIVE, LS source 650 mA, sink 1300 mA */ \
+		drv8350s_write_reg(4, 0b0000010110101010); \
 		/* 00000 T DD MM OO VVVV - T=TRETRY, DD=DEAD_TIME, MM=OCP_MODE, OO=OCP_DEG, VVVV=VDS_LVL */ \
-		/* 00000 0 01 01 10 0110: 8 ms retry, 100 ns DT, auto-retry, 4 us deglitch, VDS=0.3 V */ \
-		drv8350s_write_reg(5, 0b0000000101100110);
+		/* 00000 0 10 01 10 0110: 8 ms retry, 200 ns DT, auto-retry, 4 us deglitch, VDS=0.3 V */ \
+		drv8350s_write_reg(5, 0b0000001001100110);
     
 #define HW_HAS_3_SHUNTS
 //#define INVERTED_SHUNT_POLARITY
@@ -119,9 +114,6 @@
 #endif
 #ifndef VIN_R2
 #define VIN_R2					2200.0
-#endif
-#ifndef CURRENT_AMP_GAIN
-#define CURRENT_AMP_GAIN		20.0   // INA296A2
 #endif
 #ifndef CURRENT_SHUNT_RES
 #define CURRENT_SHUNT_RES		0.0005
