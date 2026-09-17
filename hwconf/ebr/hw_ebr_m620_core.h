@@ -21,7 +21,10 @@
 #ifndef HW_EBR_M620_CORE_H_
 #define HW_EBR_M620_CORE_H_
 
-#define FW_NAME	"2026.09.16"
+#define FW_NAME	"2026.09.17"
+
+#include "mcconf_ebr_m620.h"
+#include "appconf_ebr_m620.h"
 
 // HW properties
 #define HW_HAS_DRV8350S // idrive tuned for NTBLS0D8N08XTXG (TOLL FETs)
